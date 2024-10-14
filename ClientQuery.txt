@@ -1,0 +1,124 @@
+-------------------------------------------------
+query getAllUsers{
+  users 
+  {
+    _id
+    firstName
+    lastName
+    email
+  }
+}
+
+-----------------------------------------------------
+query getAllQuote{
+  quotes
+  {
+    name
+    by
+  }
+}
+
+--------------------------------------------------------
+-> for mandatory field (! mark)  
+
+--------------------------------------------------------
+
+query getUserById {
+  user(_id:"12345"){
+    _id
+    firstName
+    lastName
+    email
+    quotes{
+      name
+      by
+    }
+  }
+}
+----------------------------------------
+  query getQuoteByUser {
+  iquote(by:"67890"){
+    name
+    by
+  }
+}
+
+-----------------------------------------
+query getUserById ($userid:ID!){
+  user(_id:$userid){
+    _id
+    firstName
+    lastName
+    email
+    quotes{
+      name
+      by
+    }
+  }
+}
+-------------------------------------------
+query getQuoteByUser($quoteby:ID!){
+  iquote(by:$quoteby){
+    name
+    by
+  }
+}
+---------------------------------------------
+Mutations ----->
+
+mutation {
+signupUserDummy(firstName: "radha", lastName:"krishna", email:"radhakrishna@gmail.com", password:"123456789"){
+  _id
+  email
+  firstName
+  lastName
+}
+}
+------------------------------------------------
+mutation createUser($userNew:UserInput!){
+user:signupUserDummy(UserNew:$userNew){
+  _id
+  email
+  firstName
+  lastName
+}
+}
+
+{
+  "userNew": {
+    "firstName":"raha",
+    "lastName":"kapoor",
+    "email":"rahakappor@gmail.com",
+    "password":"12345"
+  }
+}
+-------------------------------------------------
+for signin user 
+mutation signinUser($userSignin:UserSigninInput!){
+user1:signinUser(UserSignin:$userSignin){
+ token
+}
+}
+
+{
+"userSignin": {
+  "email":"rahakappor@gmail.com",
+  "password":"12345"
+}
+}
+---------------------------------------------------------
+mutation createQuote($name:String!){
+  quote:createQuote(name:$name)
+}
+
+{
+  "authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmZhYTFjMDY4ZmZmMjIxNDAwNDhlNzYiLCJpYXQiOjE3Mjc3NjgxNjJ9.WS52jhdgM4WMQ88iszj9zbD4gJv1TOAydw5dPs8DRQ8"
+}
+
+{
+  "data": {
+    "quote": "Quote successfully saved..!"
+  }
+}
+-----------------------------------------------------------
+
